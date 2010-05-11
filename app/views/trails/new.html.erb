@@ -1,0 +1,19 @@
+<h1>New trail</h1>
+
+<% form_for(@trail) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :text %><br />
+    <%= f.text_field :text %>
+  </p>
+  <p>
+    <%= f.label :when %><br />
+    <%= f.date_select :when %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', trails_path %>

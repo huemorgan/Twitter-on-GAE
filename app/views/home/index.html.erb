@@ -1,0 +1,17 @@
+<% if current_user %>
+	Wow, you'r logged in to twitter using @<%=current_user.twitter_name%>
+<% else%>
+	to login in goto <%=link_to "/session/new", "/session/new"%>
+<% end%>
+
+notes:<br>
+1. see the Gemfile for the gems that were bundled here.
+the gem versions matter, older versions don't support new fixes for GAE
+new versions of the twitter GEM currently has binary extentions also not supported by GAE.
+<br>
+2. see that you set the right callback url in your twitter account
+it should match the oauth.set_callback_url in the session controller.<br>
+3. used DataMapper for models <br>
+<a href="http://gist.github.com/268192">http://gist.github.com/268192</a><br>
+4. built on <a href="http://code.google.com/p/appengine-jruby/">http://code.google.com/p/appengine-jruby/</a><br>
+5. some valuable info here about bundeling gems and setting up a new project <a href="http://code.google.com/p/appengine-jruby/wiki/InstallEverything">http://code.google.com/p/appengine-jruby/wiki/InstallEverything</a><br>

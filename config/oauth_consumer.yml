@@ -1,0 +1,11 @@
+development:
+  token: CePSu1iOMWbT8KG5ZHjCQ
+  secret: 10fq1g6O9yuxn9d8JcQappdZJMQ3NCMEJuFZGPAuE
+
+test:
+  token: CePSu1iOMWbT8KG5ZHjCQ
+  secret: 10fq1g6O9yuxn9d8JcQappdZJMQ3NCMEJuFZGPAuE
+
+production:
+  token: CePSu1iOMWbT8KG5ZHjCQ
+  secret: 10fq1g6O9yuxn9d8JcQappdZJMQ3NCMEJuFZGPAuE
