@@ -1,17 +1,28 @@
 <% if current_user %>
-	Wow, you'r logged in to twitter using @<%=current_user.twitter_name%>
+	Wow, you're logged-in @<%=current_user.twitter_name%>
 <% else%>
-	to login in goto <%=link_to "/session/new", "/session/new"%>
+	to login click <%=link_to "[ log in ]", "/session/new"%>
 <% end%>
+<br/><BR/>
+<div id="quote">
+Snatus is about one important aspect of our life.<br>
+The places we go to & the people we meet there.
+</div>
+<div id="new_trail_wrapper">
+<%= render :partial => "/trails/new", :locals =>{:trail=>@trail} %>
+</div>
+<%#=image_tag "/images/explain.png"%>
+<%=hr "Hot Places"%>
+<% @places.each do |place| %>
+	<%= render :partial => "/places/show_small", :locals =>{:place=>place} %>
+<% end %>
 
-notes:<br>
-1. see the Gemfile for the gems that were bundled here.
-the gem versions matter, older versions don't support new fixes for GAE
-new versions of the twitter GEM currently has binary extentions also not supported by GAE.
-<br>
-2. see that you set the right callback url in your twitter account
-it should match the oauth.set_callback_url in the session controller.<br>
-3. used DataMapper for models <br>
-<a href="http://gist.github.com/268192">http://gist.github.com/268192</a><br>
-4. built on <a href="http://code.google.com/p/appengine-jruby/">http://code.google.com/p/appengine-jruby/</a><br>
-5. some valuable info here about bundeling gems and setting up a new project <a href="http://code.google.com/p/appengine-jruby/wiki/InstallEverything">http://code.google.com/p/appengine-jruby/wiki/InstallEverything</a><br>
+<script>
+	// have the joined user follow twittrail
+	<% if current_user && current_user.is_following==false%>
+		$.get('/home/follow', function(data) {
+		  window.status=data;
+		});
+	<% end %>
+	
+</script>

@@ -1,0 +1,25 @@
+<div id='new_place_form'>
+<% form_for(trail) do |f| %>
+	<%= f.error_messages %>
+	<%trail.errors.each do |key, value|%>
+		<%=value%><br>
+	<% end %>
+	<% back_url ||= "http://#{request.host_with_port}/" %>
+	<%="<input type='hidden' name='back_url' value='#{back_url}'/>" if !current_user  %>
+	<% 
+		place_tag = @place ? @place.tag : "" 
+		place_date = @before_date if @before_date
+		place_date = trail.date.strftime("%m/%d/%Y %I:%M%p") if trail.date
+	%>
+	I will be at #<div class="place_tag_wrapper"><label id="place_tag_error" class="input_error"></label>
+					<br/><%= f.text_field :place, :value=>place_tag, :maxlength=>"20",:class=>"input_error" %>
+					</div> on date 
+					<%= f.text_field :date, :value=>place_date, :class=>"date" %> <%= f.submit 'New Footprint' %>
+					<br/><small>Create or find place & add you to it.</small>
+	<span class="preloader"></span>
+<% end %>
+</div>
+
+<script>
+	NewTrail.init_form(<%=current_user ? "true" : "false" %>);
+</script>

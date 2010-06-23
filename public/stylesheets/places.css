@@ -1,0 +1,109 @@
+#static_map{
+	width:150px;
+	height:150px;
+	display:inline-block;
+	vertical-align:top;
+	float:right;
+	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+}
+#place_details{
+	margin-top:10px;
+	height:150px;
+	width:600px;
+	display:inline-block;
+	vertical-align:top;
+}
+.place_detail{
+	font-size:20px;
+	height:30px;
+	vertical-align:middle;
+}
+	.place_detail input[type=text]{
+		width:400px;
+		border:0px solid;
+		padding:0px;
+		font-size:1em;
+	}
+	.place_detail_small{
+		font-size:14px;
+		height:20px;
+		color:#999999;
+	}
+		.place_detail_small{
+			font-size:14px;
+		}	
+	.place_detail img{
+		vertical-align:middle;
+		margin-bottom:3px;
+	}
+	.place_detail .place_name_text{
+		margin-top:3px;
+	}
+	
+#edit {
+	border:2px solid #dbdbdb;
+	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	padding:0px;
+}
+	#edit #title{
+		background-color:#dbdbdb;
+		color:#FFF;
+	}
+	#edit #form{
+		width:380px;
+		display:inline-block;
+		vertical-align:top;
+		padding:5px;
+	}
+	#edit #map{
+		width:350px;
+		height:350px;
+		display:inline-block;
+		text-align:center;
+		margin-right:5px;
+		margin-top:10px;
+	}
+	#edit #map #mapCanvas{
+		width:350px;
+		height:350px;
+		background-color:#f0f0f0;
+		background-image:url(/images/map_back.png);
+	}
+	#edit label{
+		font-size:1.2em;
+	}
+	#edit p{
+		padding:5px;
+	}
+	#edit h1{
+		font-size:1.5em;
+		padding:5px;
+	}	
+#show_map #map{
+	text-align:center;
+	margin-right:5px;
+	margin-top:10px;
+}
+	#show_map #map #mapCanvas{
+		width:600px;
+		height:600px;
+		margin:0px auto;
+		background:#f0f0f0 url(/images/map_back.png) no-repeat center center;
+	}
+	
+#future_trails{
+	width:530px;
+	display:inline-block;
+	vertical-align:top;
+}
+#past_trails{
+	vertical-align:top;
+	display:inline-block;
+	width:220px;
+}
+.place_small{
+	padding:5px;
+	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	margin-bottom:4px;
+	border-bottom:1px solid #EEEEEE;	
+}

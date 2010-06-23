@@ -1,0 +1,13 @@
+<p>
+  <b>Text:</b>
+  <%=h @ping.text %>
+</p>
+
+<p>
+  <b>Icon:</b>
+  <%=h @ping.icon %>
+</p>
+
+
+<%= link_to 'Edit', edit_ping_path(@ping) %> |
+<%= link_to 'Back', pings_path %>

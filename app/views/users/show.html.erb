@@ -1,0 +1,53 @@
+<%= image_tag(@user.photo_url_big,:width=>"200",:id=>"profile_photo") %>
+<div id="user_details">
+	<h1><%=@user.name%></h1>
+	<%= link_to("@#{@user.twitter_name}","http://twitter.com/#{@user.twitter_name}" )%>
+</div>
+<ul>
+<% if (@user.id == current_user.id) %>
+	<%=hr "Your pings:"%>	
+	<%= "You didn't receive any pings yet :(" if  @user.pings_received.length ==0%>
+	<% @user.pings_received.each do |p| %>
+		<li class="message">
+			<%=image_tag "/images/icn_#{p.icon}.png", :class=>"msg_icon"%>
+			<% if p.text && p.text!="" %>
+				<%=link_to "@"+p.sender.twitter_name, p.sender%> said <span class='quote'>"<%=p.text%>"</span>
+			<% else %>
+				from <%=link_to "@"+p.sender.twitter_name, p.sender%>
+			<% end %>
+			<%= (" at " + link_to("##{p.trail.place.tag}",p.trail.place)) if p.trail %><small> <%= distance_of_time_in_words(Time.now,p.created_at) %> ago</small>
+			<%= link_to "[<span class='icn icn_msg'></span>pong back]", new_ping_path+"?receiver_id=#{p.sender_id.to_s}&trail_id=#{p.trail.id.to_s}", :class=>"ping" %>
+			<%= link_to('[delete]', p, :confirm => 'Really, delete this ping?', :method => :delete)%>
+		</li>
+	<% end %>
+<% end %>
+</ul>
+<%=hr "Will be at:"%>
+<ul>
+<% @user.future_trails.each do |trail| %>
+	<li><%= render :partial => "show_trail", :locals =>{:trail=>trail} %></li>
+<% end %>
+</ul>
+<%=hr "Was at:"%>
+<ul>
+<% @user.past_trails.each do |trail| %>
+	<li><%= render :partial => "show_trail", :locals =>{:trail=>trail} %></li>
+<% end %>
+</ul>
+<script>
+	$(document).ready(function() {
+		$("a.ping").fancybox({
+			'transitionIn'	:	'elastic',
+			'transitionOut'	:	'elastic',
+			'autoDimensions': 	false,
+			'width'			:	600, 
+			'height'		:	200, 
+			'speedIn'		:	200, 
+			'speedOut'		:	200, 
+			'scrolling'		: 	'no',
+			'overlayShow'	:	true
+		});
+
+	});
+	
+</script>

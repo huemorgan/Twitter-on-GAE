@@ -1,0 +1,46 @@
+h1{
+	font-size:2em;
+	margin-bottom:5px;
+	color:#a5a5a5;
+}
+#profile_photo{
+		vertical-align:center;
+		margin-right:10px;
+}
+#user_details{
+	display:inline-block;
+}
+.msg_icon{
+	vertical-align:middle;
+	margin-right:5px;
+}
+ol, ul {
+}
+li{
+	margin-left: 45px;
+	padding: 0px 0px 7px 0px;
+	color:#555;
+	line-height:1.2em;
+}
+li .one_line{
+	margin-top:4px;
+	color:black;
+}
+.hr_title{
+	font-size:1.3em;
+}
+.hr_wrapper{
+	margin-bottom:0px;
+}
+li.message{
+	color:#aaa
+}
+	li.message .quote{
+		color:#555;
+	}
+	li.message a{
+		color:#aaa
+	}
+.edit_user p{
+	margin:10px;
+}

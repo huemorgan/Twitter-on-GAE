@@ -1,0 +1,22 @@
+<% form_for(trail) do |f| %>
+<div class="trail_details">
+  	<%= f.error_messages %>
+    <%= f.label :date, "Date you will visit ##{trail.place.tag} <small>(*required field)</small>" %><br>
+    <%= f.text_field :date, :class=>"date",:value=>trail.date.strftime("%m/%d/%Y %I:%M%p") %><br>
+	<%= f.label :date, "One line <small>(why do you come here?, what are u looking for?, people you'd like to meet)</small>" %><br>
+	<%= f.text_field :text,:maxlength=>"130",:size=>"40" %><%= f.submit 'Update' %>
+</div>
+<% end %>
+<script type="text/javascript">
+	/* <![CDATA[ */
+	$(function() {
+		$('.date').datepicker({
+			changeMonth: true,
+			changeYear: true,
+      showTime: true,
+			constrainInput: true,
+		});
+	});
+			
+	/* ]]> */
+</script>

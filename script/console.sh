@@ -1,2 +1,2 @@
 #!/bin/sh
-appcfg.rb run -S irb -r config/environment
+sudo appcfg.rb run -S irb -r config/environment 

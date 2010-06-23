@@ -1,0 +1,10 @@
+<%=link_to image_tag("/images/logo.png",:alt=>"snatus",:id=>"logo"),root_path%>
+<span id="top_options">
+	<%  if current_user %>
+		<%=link_to "My Footprints", current_user%>
+		&nbsp;&bull;&nbsp;
+		<%=link_to("Settings",edit_user_path(current_user))%>
+	<% else %>
+		<%=link_to "Login / Signup", "/session/new",:method =>:post%>
+	<% end%>
+</span>

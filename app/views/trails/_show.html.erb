@@ -1,0 +1,21 @@
+<span id="trail<%=trail.id.to_s%>">
+<div class="trail_details">
+	<span id="intro"><%=link_to "#{trail.user.twitter_name}", trail.user,:class=>"name" %> <%=h trail.text%><%= "<a href='javascript:place.load_trail_edit(#{trail.id.to_s})' class='opt_tool'>[+] add one liner</a>" if belongs_to_user && !trail.text %></span>
+	<span class="info">
+	<% if(!trail.date.nil?)%>
+			will be here in <%= distance_of_time_in_words(Time.now,trail.date) %> (<%=trail.date.strftime("%m/%d/%Y %I:%M%p")%>)
+	<% end %>
+	<%= "<a href='javascript:place.load_trail_edit(#{trail.id.to_s})' class='opt_tool'>[edit]</a>" if belongs_to_user %>
+	<%= link_to('[delete]', trail, :confirm => 'Really, delete your trail?', :class=>"opt_tool", :method => :delete) if belongs_to_user%>
+	<% if(!belongs_to_user) %>
+	<%= 
+		if current_user
+			link_to "<span class='icn icn_msg'></span>ping", new_ping_path+"?receiver_id=#{trail.user.id.to_s}&trail_id=#{trail.id.to_s}", :class=>"opt_tool ping"
+		else
+			link_to "<span class='icn icn_msg'></span>ping", "/session/new_save?trail_id=#{trail.id}", :class=>"opt_tool"
+		end
+	%>
+	<% end %>
+	</span>
+</div>
+</span>

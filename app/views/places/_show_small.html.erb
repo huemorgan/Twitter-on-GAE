@@ -1,0 +1,11 @@
+<div class="place_small">
+	<% place.future_trails(:limit=>8).each do |t| %>
+	<%=image_tag t.user.photo_url%>
+	<% end %>
+	<% trail = place.future_trails(:limit=>1)%>
+	<% if trail%>
+		will be at <%= "#{link_to "##{place.tag}",place}"%> in <%= distance_of_time_in_words(Time.now,trail[0].date) %> 
+	<% else %>
+		was at <%= "#{link_to "##{place.tag}",place}"%>
+	<% end%>
+</div>

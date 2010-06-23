@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta name="google-site-verification" content="3B2tnYO8HT4c1CIlSMfaop_Q8l_9fB5YGqwfwmeryFc" />
+  <title><%= controller.action_name %>twitt_trail_onelinetwitt_trail_oneline</title>
+	<%= stylesheet_link_tag 'reset','common','places','home','jquery-ui-1.8.2.custom'%>
+	<%= javascript_include_tag 'jquery-1.4.2.min','jquery.form','jquery-ui-1.8.2.custom.min','timepicker','application' %>
+	
+	<%= stylesheet_link_tag '/ui/fancybox/jquery.fancybox-1.3.1.css'%>
+	<%= javascript_include_tag '/ui/fancybox/jquery.fancybox-1.3.1.pack.js' %>
+</head>
+<body>
+<div id="top">
+<%= render :partial => "/layouts/top_nav" %>
+</div>
+<div id="main">
+<% if flash[:notice]%>	
+<p class="notice"><%= flash[:notice] %></p>
+<% end %>
+<%= yield %>
+</div>
+<%=statistics(:is_user =>!current_user.nil?, :environment => RAILS_ENV)%>
+</body>
+</html>

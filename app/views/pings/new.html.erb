@@ -1,0 +1,85 @@
+<div id="new_ping_form">
+<h1>New ping</h1>
+<p>
+	Interact with people by Pinging them (you don't have to add text - but it helps).
+</p>
+<% form_for(@ping) do |f| %>
+  <%= f.error_messages %>
+	<input type='hidden' name='receiver_id' value='<%=params[:receiver_id]%>'/>
+	<input type='hidden' name='trail_id' value='<%=params[:trail_id]%>'/>
+  <p>
+	<div id="ping_icons">
+		<%= f.radio_button(:icon, "env")%>
+		<%= f.label :icon_env, image_tag("/images/icn_env.png") + "regular" %>
+
+		<%= f.radio_button(:icon, "bc")%>
+		<%= f.label :icon_bc, image_tag("/images/icn_bc.png") + "business card" %>
+
+		<%= f.radio_button(:icon, "beer")%>
+		<%= f.label :icon_beer, image_tag("/images/icn_beer.png") + "beer" %>
+	</div>
+</p>
+<p>
+    <%= f.label :text, "Text <small>(not required)</small>" %><br />
+    <%= f.text_field :text, :size=>50 %>
+  </p>
+  <p>
+    <%= f.submit 'send ping' %><span id="newping" class="preloader"></span>
+  </p>
+<% end %>
+
+<div id="ping_success_wrapper" style="display:none">
+	<div id="ping_success">
+		<br/><br/>
+		<h3>Ping was successfully created</h3>
+		<br/><br/><br/>
+		<%= button_to_function "Close", "$.fancybox.close();"%>
+	</div>
+</div>
+<script>
+// Place your application-specific JavaScript functions and classes here
+// This file is automatically included by javascript_include_tag :defaults
+var ping = new Object()
+window.ping = ping;
+
+ping.check_validity = function(formData, jqForm, options) {
+	ping.preloader_show("saving");
+	return true;
+}
+
+ping.preloader_show = function(text) {
+	$("#newping.preloader").addClass("preloader_active");
+	$("#newping.preloader").text(text);
+}
+ping.preloader_hide = function() {
+	$("#newping.preloader").removeClass("preloader_active");
+	$("#newping.preloader").text("");
+}
+
+ping.proccess_response = function(responseText, statusText, xhr, $form) {
+	if (statusText != "success"){
+		alert("sorry en error has occurred, please try again");
+		ping.preloader_hide();
+		return
+	}
+	
+	var info = "";
+	try{info = eval("eval("+responseText+")");}catch(e){}
+	if(info!="" && info.success==true ) {
+		$("#new_ping_form").parent().html($("#ping_success_wrapper").html());
+	}else{
+		$("#new_ping_form").parent().html(responseText);
+	}
+}
+
+ping.init_form = function (){
+	ping.options = { 
+		beforeSubmit: ping.check_validity,
+		success: ping.proccess_response 
+	};
+	$('#new_ping').ajaxForm(ping.options); 
+}
+ping.init_form();
+
+</script>
+</div>

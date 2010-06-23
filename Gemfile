@@ -8,3 +8,4 @@ gem 'rails_dm_datastore'
 gem 'rails', "2.3.5"
 gem 'twitter', "0.8.4"
 gem 'jruby-openssl', "0.5.2"
+gem 'dm-pagination'

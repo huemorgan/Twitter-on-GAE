@@ -1,0 +1,8 @@
+<% if(trail.date)%>
+<% if(trail.date > Time.now)%>
+	<%=link_to "#"+trail.place.tag,trail.place %> in <%= distance_of_time_in_words(Time.now,trail.date) %> <small>(<%=trail.date.strftime("%m/%d/%Y %I:%M%p")%>)</small>
+	<%= "<span class='one_line'>“#{trail.text}”</span>" if trail.text && trail.text!="" %>
+<% else %>
+	<%=link_to "#"+trail.place.tag,trail.place %> <%= distance_of_time_in_words(Time.now,trail.date) %> ago
+<% end %>
+<% end %>

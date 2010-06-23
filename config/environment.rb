@@ -57,5 +57,5 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
   OauthConsumerConfig = YAML.load_file("#{RAILS_ROOT}/config/oauth_consumer.yml")[RAILS_ENV]
-  
+  # config.action_view.allow_concurrency            = false
 end

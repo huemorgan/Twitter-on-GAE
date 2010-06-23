@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   def access_denied
     respond_to do |format|
       format.json { render :json=> "Login required.".to_json, :status => :forbidden }
-      format.html { render :text =>"please login"}
+      format.html { redirect_to "/session/new"}
     end
   end  
   
@@ -38,15 +38,42 @@ class ApplicationController < ActionController::Base
                 OauthConsumerConfig['secret'], :sign_in => true)
   end
 
-  def client
-    oauth.authorize_from_access(session[:atoken], session[:asecret])
-    Twitter::Base.new(oauth)
+  # def client
+  #   oauth.authorize_from_access(session[:atoken], session[:asecret])
+  #   @client ||= Twitter::Base.new(oauth)
+  # end
+  # helper_method :client
+  
+  def twittrail
+    @twittrail = User.first(:twitter_name => 'twit_trail')
   end
-  helper_method :client
+  helper_method :twittrail
+
+  def direct_message(to,text)
+    to.client.direct_message_create(to.twitter_id,"@twit_trail " + text)
+  end  
+
+  def update_status(user,text)
+    user.client.update(text)
+  end
 
   def force_sign_in(exception)
     reset_session
     flash[:error] = 'Seems your credentials are not good anymore. Please sign in again.'
     redirect_to new_session_path
   end
+  
+  def try_twice(&block)
+    retries = 0
+    begin
+      block.call
+      return true
+    rescue AppEngine::URLFetch::DownloadError => e
+      if retries==0 
+        retries+=1
+        retry
+      end
+      return false
+    end
+  end  
 end

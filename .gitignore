@@ -1,0 +1,8 @@
+.DS_Store
+DS_Store
+WEB-INF
+.gems
+bin/*
+log/*.log
+tmp/*/* 
+db/*.sqlite3

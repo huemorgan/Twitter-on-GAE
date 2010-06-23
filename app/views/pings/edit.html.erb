@@ -1,0 +1,20 @@
+<h1>Editing ping</h1>
+
+<% form_for(@ping) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :text %><br />
+    <%= f.text_field :text %>
+  </p>
+  <p>
+    <%= f.label :icon %><br />
+    <%= f.text_field :icon %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @ping %> |
+<%= link_to 'Back', pings_path %>

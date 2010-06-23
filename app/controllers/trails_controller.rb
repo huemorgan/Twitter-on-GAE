@@ -1,8 +1,9 @@
 class TrailsController < ApplicationController
+  before_filter :login_required, :except =>[:show]
   # GET /trails
   # GET /trails.xml
   def index
-    @trails = Trail.all
+    # @trails = Trail.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +17,7 @@ class TrailsController < ApplicationController
     @trail = Trail.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :layout=>false }
       format.xml  { render :xml => @trail }
     end
   end
@@ -35,20 +36,30 @@ class TrailsController < ApplicationController
   # GET /trails/1/edit
   def edit
     @trail = Trail.find(params[:id])
+    render :layout=>false
   end
 
   # POST /trails
   # POST /trails.xml
   def create
-    @trail = Trail.new(params[:trail])
+    session[:user_save] = nil
+    # create place
+    @place = Place.find_or_create_place(params[:trail][:place].downcase,current_user)
+    # create trail
+    @trail = Trail.new()
+    @trail.date = params[:trail][:date]
+    # update trail
+    @trail.user = current_user
+    @trail.place = @place
 
     respond_to do |format|
-      if @trail.save
+      if @place.errors.length==0 && @trail.save
         flash[:notice] = 'Trail was successfully created.'
-        format.html { redirect_to(@trail) }
+        format.html { render :json => {:success=>true,:redirect_to=>url_for(@place)}}
         format.xml  { render :xml => @trail, :status => :created, :location => @trail }
       else
-        format.html { render :action => "new" }
+        @trail.errors.add(:place, "Place name must be 3 to 20 characters long") if !@place.errors.length==0
+        format.html { render :action => "new", :layout=>false }
         format.xml  { render :xml => @trail.errors, :status => :unprocessable_entity }
       end
     end
@@ -62,7 +73,7 @@ class TrailsController < ApplicationController
     respond_to do |format|
       if @trail.update_attributes(params[:trail])
         flash[:notice] = 'Trail was successfully updated.'
-        format.html { redirect_to(@trail) }
+        format.html { redirect_to(@trail.place) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -75,10 +86,18 @@ class TrailsController < ApplicationController
   # DELETE /trails/1.xml
   def destroy
     @trail = Trail.find(params[:id])
+    if (@trail.user.id != current_user.id)
+      respond_to do |format|
+        format.html { render :text=> "not allowed" }
+        format.xml  { head :not_allowed }
+      end
+      return
+    end     
+    place = @trail.place
     @trail.destroy
 
     respond_to do |format|
-      format.html { redirect_to(trails_url) }
+      format.html { redirect_to(place) }
       format.xml  { head :ok }
     end
   end

@@ -1,0 +1,24 @@
+<div id="settings">
+<h1>Settings</h1>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.check_box :notify_message %>
+    <%= f.label :notify_message,"Get notified (in twitter) when someone pings you." %>
+  </p>
+  <p>
+    <%= f.check_box :twitt_trail_new %>
+    <%= f.label :twitt_trail_new,"Twitt about new trails you make." %>
+  </p>
+  <p>
+    <%= f.check_box :twitt_trail_oneline %>
+    <%= f.label :twitt_trail_oneline,"Twitt changes in one-lines you make." %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+<br/>
+<%= link_to 'Back', @user %>
+</div>

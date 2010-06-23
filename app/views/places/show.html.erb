@@ -1,0 +1,68 @@
+<%= render :partial => "place_details", :locals =>{:place=>@place,:link_tag=>false} %>
+<% if @place.long != 0 && @place.lat != 0 %>
+<script type="text/javascript">
+	$( function() {
+		// Add static map
+		url = '<%="http://maps.google.com/maps/api/staticmap?center=#{@place.lat},#{@place.long}&zoom=14&size=150x150&maptype=roadmap&markers=color:blue|label:S|40.702147,-74.015794&markers=color:red||#{@place.lat},#{@place.long}&mobile=true&sensor=true&key=ABQIAAAATsOBa2SQPxI8M0UNsBk6GBTOJt8qsY1lHdgIN53aN9KnZi4TxRQeYrORsqkhgPLEtwREPsGvmyEfGg"%>'
+		$("#static_map").css("background-image", "url('" + url + "')");
+		$("#static_map").click(function() {
+			window.location="/places/map/<%=@place.id%>";
+  		});
+	});
+</script>
+<div id="static_map"></div>
+<% end %>
+<div id="new_trail_wrapper">
+<% if !current_user || (current_user && @place.user_trails(current_user).length == 0) %>
+	<%= render :partial => "/trails/new", :locals =>{:trail=>Trail.new,:place=>@place, :back_url=>"http://#{request.host_with_port}/#{@place.tag}"} %>
+<% end %>
+</div>
+<div id="future_trails">
+<%=hr "Future footprints"%>
+<% @place.future_trails.each do |trail| %>
+	<div class="trail">
+			<span class="photo"><%= link_to(image_tag(trail.user.photo_url, :alt=>trail.user.twitter_name), trail.user) %></span>
+			<% belongs_to_user = (current_user && trail.user.id == current_user.id) %>
+			<%= render :partial => "/trails/show", :locals =>{:trail=>trail,:place=>@place, :belongs_to_user=>belongs_to_user} %>
+	</div>
+<% end %>
+</div>
+<div id="past_trails">
+<%=hr "Past footprints"%>
+<% @place.past_trails.each do |trail| %>
+	<div class="trail">
+		<span class="photo"><%= link_to(image_tag(trail.user.photo_url, :alt=>trail.user.twitter_name), trail.user) %></span>
+		<% belongs_to_user = (current_user && trail.user.id == current_user.id) %>
+		<%= render :partial => "/trails/show_past", :locals =>{:trail=>trail,:place=>@place, :belongs_to_user=>belongs_to_user} %>
+	</div>
+<% end %>
+</div>
+<script>
+	var place = new Object()
+	window.place = place;
+	place.edited_trail_id = "";
+
+	place.load_trail_edit = function(id){
+		place.edited_trail_id = id;
+		$.get("/trails/" + place.edited_trail_id + "/edit",{expire:(3)},place.load_trail_edit_back); 	
+	}
+	// the return function from the ajax call in the init function
+	place.load_trail_edit_back = function(data){
+		$("#trail"+place.edited_trail_id).html(data);
+	}
+
+	$(document).ready(function() {
+		$("a.ping").fancybox({
+			'transitionIn'	:	'elastic',
+			'transitionOut'	:	'elastic',
+			'autoDimensions': 	false,
+			'width'			:	600, 
+			'height'		:	200, 
+			'speedIn'		:	200, 
+			'speedOut'		:	200, 
+			'scrolling'		: 	'no',
+			'overlayShow'	:	true
+		});
+	});
+	
+</script>

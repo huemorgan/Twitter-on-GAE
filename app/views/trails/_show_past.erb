@@ -1,0 +1,10 @@
+<span id="trail<%=trail.id.to_s%>">
+<div class="trail_details">
+	<p id="intro"><%=link_to "#{trail.user.twitter_name}", trail.user,:class=>"name" %></p>
+	<p id="info">
+	<% if(!trail.date.nil?)%>
+		was here <%= distance_of_time_in_words(Time.now,trail.date) %> ago
+	<% end %>
+	</p>
+</div>
+</span>

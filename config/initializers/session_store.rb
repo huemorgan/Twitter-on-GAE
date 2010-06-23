@@ -14,7 +14,7 @@ ActionController::Base.session = {
 # (create the session table with "rake db:sessions:create")
 # ActionController::Base.session_store = :active_record_store
 
-if defined? JRuby::Rack
-  require 'action_controller/session/java_servlet_store'
-  ActionController::Base.session_store = :java_servlet_store
-end
+# if defined? JRuby::Rack
+#   require 'action_controller/session/java_servlet_store'
+#   ActionController::Base.session_store = :java_servlet_store
+# end

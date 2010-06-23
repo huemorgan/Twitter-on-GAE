@@ -1,6 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :pings
+
+  map.connect 'places/lookfor/', :controller => 'places', :action => 'lookfor'
+  map.resources :places
   map.resources :trails
-  map.resources :sessions
+  map.resources :users
+  map.resource :sessions, :member => { :create => :get, :destroy => :get}, :collection => { :create => :get, :destroy => :get }
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -43,4 +48,6 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  map.connect ':tag', :controller => 'places', :action => 'show'
+  
 end

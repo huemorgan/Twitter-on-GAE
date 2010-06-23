@@ -1,0 +1,29 @@
+<div id="place_details">
+<div class="place_detail">
+<span class="icn icn_tag"></span><span class="icn_label">place tag:</span>
+<%= link_to_if link_tag,"##{place.tag}",place,:style=>"color:#000" %>
+</div>
+
+<div class="place_detail">
+<span class="icn icn_link"></span><span class="icn_label">place url:</span>
+<input onclick="this.select()" id="place_url" type="text" value="<%=h "http://snat.us/#{place.tag}" %>" />
+</div>
+<br/>
+<div class="place_detail place_detail_small">
+<%=image_tag "/images/dot.png"%><span class="icn_label">name:</span>
+<% if place.name=="" || place.name.nil?  %>
+<%= link_to("[enter place name]", edit_place_path(place), :class=>"opt_tool") %>
+<% else %>
+<%=h place.name%> <%= link_to("[change]", edit_place_path(place), :class=>"opt_tool")%>
+<% end %>
+</div>
+
+<div class="place_detail place_detail_small">
+<%=image_tag "/images/dot.png"%><span class="icn_label">location:</span>
+<% if place.address=="" || place.address.nil?  %>
+<%= link_to("[enter place location]", edit_place_path(place), :class=>"opt_tool") %>
+<% else %>
+<%=h place.address%> <%= link_to("[change]", edit_place_path(place), :class=>"opt_tool")%>
+<% end %>
+</div>
+</div>

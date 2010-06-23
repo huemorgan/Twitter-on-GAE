@@ -1,0 +1,72 @@
+<div id="edit">
+	<div id="title"><h1>Editing place #<%=@place.tag%></h1></div>
+	<div id="form">
+	<% form_for(@place, :autocomplete=>"off") do |f| %>
+	  <%= f.error_messages %>
+		<%=hidden_field(:place, :long)%>
+		<%=hidden_field(:place, :lat)%>
+	  <p>
+	    <%= f.label :name, "##{@place.tag} full name" %><br />
+	    <%= f.text_field :name %>
+	  </p>
+	  <p>
+	    <%= f.label :address, "Location <small>address, city, country</small>" %><br />
+	    <%= f.text_field :address %>
+	  </p>
+	  <p>
+		<div style="padding:0px 5px 0px 5px">
+			<div style="float:right;">
+			<%= link_to 'cancel', @place %>
+			</div>
+		    <%= f.submit 'Update' %>
+		</div>
+	  </p>
+	<% end %>
+	</div>
+	<div id="map">
+		<div id="mapCanvas"></div>
+		 drag marker to fix location
+	</div>
+</div>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=ABQIAAAATsOBa2SQPxI8M0UNsBk6GBTOJt8qsY1lHdgIN53aN9KnZi4TxRQeYrORsqkhgPLEtwREPsGvmyEfGg"></script>
+<script type="text/javascript">
+gmap.long = <%=@place.long%>;
+gmap.lat = <%=@place.lat%>;
+gmap.place_tag = '<%=@place.tag%>';
+gmap.geocoder = new google.maps.Geocoder();
+
+// Onload handler to fire off the app.
+google.maps.event.addDomListener(window, 'load', gmap.initialize);
+
+$("#place_address").autocomplete({
+	source: function(request, response) {
+		if (gmap.geocoder) {
+			gmap.geocoder.geocode( { 'address': request.term}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					gmap.map.setCenter(results[0].geometry.location);
+					gmap.marker.setPosition(results[0].geometry.location);
+					gmap.updateMarkerPosition(results[0].geometry.location);
+					
+					// var marker = new google.maps.Marker({
+					// 	map: map, 
+					// 	position: results[0].geometry.location
+					// });
+				} else {
+					//alert("Geocode was not successful for the following reason: " + status);
+				}
+
+			});
+		}
+	},
+	minLength: 1,
+	select: function(event, ui) {
+		log(ui.item ? ("Selected: " + ui.item.label) : "Nothing selected, input was " + this.value);
+	},
+	open: function() {
+		$(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+	},
+	close: function() {
+		$(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+	}
+});
+</script>

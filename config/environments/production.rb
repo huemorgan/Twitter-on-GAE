@@ -26,3 +26,8 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+config.action_controller.consider_all_requests_local = true
+config.action_view.debug_rjs                         = true
+
+ActionController::Base.allow_concurrency = false
